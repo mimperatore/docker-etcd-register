@@ -1,0 +1,17 @@
+[Unit]
+Description=Docker Exposed Container Ports Registration Service
+After=docker.service
+After=etcd.service
+BindTo=docker.service
+
+[Service]
+EnvironmentFile=/etc/environment
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill etcd-register
+ExecStartPre=-/usr/bin/docker rm etcd-register
+ExecStartPre=/usr/bin/docker pull mimperatore/docker-etcd-register
+ExecStart=/usr/bin/docker run --name etcd-register -e HOST_IP=${COREOS_PRIVATE_IPV4} -e ETCD_ENDPOINT=${COREOS_PRIVATE_IPV4}:4001 -v /var/run/docker.sock:/var/run/docker.sock mimperatore/docker-etcd-register
+ExecStop=/usr/bin/docker stop etcd-register
+
+[X-Fleet]
+Global=true
