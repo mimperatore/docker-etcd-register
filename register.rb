@@ -48,7 +48,7 @@ def ip_of_interest?(ip)
 end
 
 def port_of_interest?(port_info)
-  ip_of_interest?(port_info[:ip])
+  port_info && port_info.key?(:ip) && ip_of_interest?(port_info[:ip])
 end
 
 def interesting_ports_for(image_name, container)
@@ -70,7 +70,7 @@ def interesting_ports_for(image_name, container)
         }
       end
     end.compact if public_ports
-  end.select { |port_info| port_of_interest?(port_info) }
+  end.compact.select { |port_info| port_of_interest?(port_info) }
 end
 
 def register_container(image_name, container_id)
