@@ -11,6 +11,12 @@ and registers/unregisters containers via CoreOs's [etcd] distributed key-value s
 Unlike [nerve], this service does not currently monitor service health.  This feature may be added at a later date,
 although perhaps in a separate service.
 
+The key differences between this implementation and Jason Wilder's are the following:
+
+* Ruby-based implementation, instead of Go + Python
+* Supports multiple exposed ports per container
+* Listens to container lifecycle events in real-time using the [Docker Remote API][docker-remote-api]
+
 ### Usage
 
 To run it:
@@ -90,3 +96,4 @@ This project is released under the [MIT License][mit].
 [CoreOS]: https://coreos.com/
 [etcd]: https://coreos.com/using-coreos/etcd/
 [mit]: http://www.opensource.org/licenses/MIT
+[docker-remote-api]: https://docs.docker.com/reference/api/docker_remote_api/
