@@ -43,12 +43,8 @@ def key_for_container(image_name, container_id)
   "#{key_for_image(image_name)}/#{CONTAINER_KEY_FORMAT}" % container_id
 end
 
-def ip_of_interest?(ip)
-  ip != "0.0.0.0" && ip != "127.0.0.1" && ip != "localhost"
-end
-
 def port_of_interest?(port_info)
-  port_info && port_info.key?(:ip) && ip_of_interest?(port_info[:ip])
+  port_info && port_info.key?(:ip)
 end
 
 def interesting_ports_for(image_name, container)
